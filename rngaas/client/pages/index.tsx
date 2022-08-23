@@ -3,37 +3,46 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 
-const serverUrl = "https://server/";
+const serverUrl = "http://105.107.130.207:5000/";
 const Home: NextPage = () => {
-  const [url, setUrl] = useState("");
+  const [filename, setFilename] = useState("");
   const [length, setLength] = useState(1024);
   const [loading, setLoading] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const generate = () => {
-    axios.get(`${serverUrl}/generate?length=${length}`).then((res) => {
-      console.log(res);
-    });
-    setUrl("abc");
+    setLoading(true);
+    axios
+      .get(`${serverUrl}generate?length=${length}`)
+      .then((res) => {
+        setFilename(res.data.filename);
+        setLoading(false);
+      })
+
+      .catch((e) => {
+        console.error(e);
+        alert("Error!");
+        setLoading(false);
+      });
   };
   const download = () => {
-    alert("generate!");
-    setUrl("");
+    window.open(`${serverUrl}download?file=${filename}`, "_blank");
+    setFilename("");
   };
   return (
     <>
       <Head>
         <title>CQTRNG | RNGaaS</title>
-        <link rel="shortcut icon" href="https://i.ibb.co/J2tNZ3R/image.png" />
+        {/* <link rel="shortcut icon" href="https://i.ibb.co/J2tNZ3R/image.png" />
+         */}
+        <link
+          rel="shortcut icon"
+          href="https://i.ibb.co/gm6bs9j/Round-CQT.png"
+        />
       </Head>
-      <section
-        className="w-full px-6 pb-12 antialiased bg-white"
-        data-tails-scripts="//unpkg.com/alpinejs"
-      >
+      <section className="w-full px-6 pb-12 antialiased bg-white">
         <div className="mx-auto max-w-7xl">
-          <nav
-            className="relative z-50 h-24 select-none"
-            x-data="{ showMenu: false }"
-          >
+          <div className="relative z-50 h-24 select-none">
             <div className="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
               <div className="flex items-center justify-start w-1/4 h-full pr-4">
                 <a href="#_" className="inline-block py-4 md:py-0">
@@ -42,7 +51,11 @@ const Home: NextPage = () => {
                   </span>
                 </a>
               </div>
-              <div className="top-0 left-0 items-start hidden w-full h-full p-4 text-sm bg-gray-900 bg-opacity-50 md:items-center md:w-3/4 md:absolute lg:text-base md:bg-transparent md:p-0 md:relative md:flex">
+              <div
+                className={`top-0 left-0 right-0 bottom-0 items-start w-full h-full p-4 text-sm bg-gray-900 bg-opacity-50 md:items-center md:w-3/4 md:absolute lg:text-base md:bg-transparent md:p-0 md:relative md:flex ${
+                  showMenu ? "flex fixed" : "hidden"
+                }`}
+              >
                 <div className="flex-col w-full h-auto overflow-hidden bg-white rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row">
                   <a
                     href="#_"
@@ -92,39 +105,44 @@ const Home: NextPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="absolute right-0 flex flex-col items-center items-end justify-center w-10 h-10 bg-white rounded-full cursor-pointer md:hidden hover:bg-gray-100">
-                <svg
-                  className="w-6 h-6 text-gray-700"
-                  x-show="!showMenu"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  x-cloak=""
-                >
-                  <path d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-                <svg
-                  className="w-6 h-6 text-gray-700"
-                  x-show="showMenu"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  x-cloak=""
-                >
-                  <path
+
+              <div
+                onClick={() => setShowMenu(!showMenu)}
+                className="absolute right-0 flex flex-col items-center items-end justify-center w-10 h-10 bg-white rounded-full cursor-pointer md:hidden hover:bg-gray-100"
+              >
+                {showMenu ? (
+                  <svg
+                    className="w-6 h-6 text-gray-700"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    x-cloak=""
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-6 h-6 text-gray-700"
+                    fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    x-cloak=""
+                  >
+                    <path d="M4 6h16M4 12h16M4 18h16"></path>
+                  </svg>
+                )}
               </div>
             </div>
-          </nav>
+          </div>
 
           <div className="container max-w-lg px-4 py-32 mx-auto mt-px text-left md:max-w-none md:text-center">
             <h1 className="text-5xl font-extrabold leading-10 tracking-tight text-left text-gray-900 md:text-center sm:leading-none md:text-6xl lg:text-7xl">
@@ -138,7 +156,7 @@ const Home: NextPage = () => {
               generator using a quantum device!
             </div>
             <div className="text-center text-sm text-gray-500 my-4">
-              This is a demo, the website is not functional yet BUT you can
+              This is a demo, most links are not functional (yet) BUT you can
               scroll down and generate random numbers :).
             </div>
             <div className="flex flex-col items-center mt-12 text-center">
@@ -161,24 +179,24 @@ const Home: NextPage = () => {
 
       <section className="bg-gray-100">
         <div className="max-w-screen-xl px-4 py-12 mx-auto sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-3">
-            <div className="flex items-center justify-center col-span-1 md:col-span-2 lg:col-span-1">
+          <div className="flex flex-col items-center md:flex-row w-full justify-evenly">
+            <div className="m-5">
               <img
                 src="https://i.ibb.co/NCsWw9C/629a217b4ae75-image-removebg-preview.png"
                 alt="Womanium's program logo"
                 style={{ maxHeight: "100px", width: "auto" }}
               />
             </div>
-            <div className="flex items-center justify-center col-span-1 md:col-span-2 lg:col-span-1">
+            <div className="m-5">
               <img
                 src="https://i.ibb.co/ChLyFKb/ORCA-Computing-Logo.png"
                 alt="ORCA's logo"
                 style={{ maxHeight: "100px", width: "auto" }}
               />
             </div>
-            <div className="flex items-center justify-center col-span-1 md:col-span-2 lg:col-span-1">
+            <div className="m-5">
               <img
-                src="https://i.ibb.co/J2tNZ3R/image.png"
+                src="https://i.ibb.co/gm6bs9j/Round-CQT.png"
                 alt="CQT's logo"
                 style={{ maxHeight: "100px", width: "auto" }}
               />
@@ -212,46 +230,48 @@ const Home: NextPage = () => {
               />
             </div>
             <div className="my-10">
-              <button
-                className="my-2 mr-2 inline-flex items-center justify-center w-full px-5 py-4 mt-6 font-sans text-base leading-none text-white no-underline bg-indigo-600 border border-indigo-600 border-solid rounded cursor-pointer md:w-auto lg:mt-0 hover:bg-indigo-700 hover:border-indigo-700 hover:text-white focus-within:bg-indigo-700 focus-within:border-indigo-700 focus-within:text-white sm:text-lg md:text-xl disabled:bg-gray-500  disabled:border-gray-500"
-                disabled={url !== "" || loading}
-                onClick={generate}
-              >
-                Generate
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 ml-2"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              {filename === "" ? (
+                <button
+                  className="my-2 mr-2 inline-flex items-center justify-center w-full px-5 py-4 mt-6 font-sans text-base leading-none text-white no-underline bg-indigo-600 border border-indigo-600 border-solid rounded cursor-pointer md:w-auto lg:mt-0 hover:bg-indigo-700 hover:border-indigo-700 hover:text-white focus-within:bg-indigo-700 focus-within:border-indigo-700 focus-within:text-white sm:text-lg md:text-xl disabled:bg-gray-500  disabled:border-gray-500"
+                  disabled={loading}
+                  onClick={generate}
                 >
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12,5 19,12 12,19"></polyline>
-                </svg>
-              </button>
-              <button
-                className="inline-flex items-center justify-center w-full px-5 py-4 mt-6 ml-0 font-sans text-base leading-none text-white no-underline bg-indigo-600 border border-indigo-600 border-solid rounded cursor-pointer md:w-auto lg:mt-0 hover:bg-indigo-700 hover:border-indigo-700 hover:text-white focus-within:bg-indigo-700 focus-within:border-indigo-700 focus-within:text-white sm:text-lg lg:ml-6 md:text-xl disabled:bg-gray-500  disabled:border-gray-500"
-                disabled={url === ""}
-                onClick={download}
-              >
-                Download
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5 ml-2"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  {loading ? "Generating..." : "Generate"}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 ml-2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12,5 19,12 12,19"></polyline>
+                  </svg>
+                </button>
+              ) : (
+                <button
+                  className="inline-flex items-center justify-center w-full px-5 py-4 mt-6 ml-0 font-sans text-base leading-none text-white no-underline bg-indigo-600 border border-indigo-600 border-solid rounded cursor-pointer md:w-auto lg:mt-0 hover:bg-indigo-700 hover:border-indigo-700 hover:text-white focus-within:bg-indigo-700 focus-within:border-indigo-700 focus-within:text-white sm:text-lg md:text-xl disabled:bg-gray-500  disabled:border-gray-500"
+                  onClick={download}
                 >
-                  <line x1="10" y1="5" x2="10" y2="19"></line>
-                  <polyline points="5,12 10,19 15,12 "></polyline>
-                </svg>
-              </button>
+                  Download
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5 ml-2"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="10" y1="5" x2="10" y2="19"></line>
+                    <polyline points="5,12 10,19 15,12 "></polyline>
+                  </svg>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -429,7 +449,7 @@ const Home: NextPage = () => {
             CQTRNG<span className="text-indigo-600">.</span>
           </a>
           <p className="mt-4 text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l sm:border-gray-200 sm:mt-0">
-            © 2021 CQTRNG built using{" "}
+            © 2022 CQTRNG built using{" "}
             <a href="https://devdojo.com/tails" style={{ color: "blue" }}>
               Tailwindcss Page Builder
             </a>

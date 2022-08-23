@@ -21,13 +21,13 @@ sys.path.insert(0, os.path.abspath("../../"))
 # -- Project information -----------------------------------------------------
 
 project = "CQTRNG"
-copyright = "2022, Abdellah Tounsi, Amina Sadik, Mohamed Messaoud Louamri, Nacer eddine Belaloui, Wafa Makhlouf, Zakaria Benhaddouche"
-author = "Abdellah Tounsi, Amina Sadik, Mohamed Messaoud Louamri, Nacer eddine Belaloui, Wafa Makhlouf, Zakaria Benhaddouche"
+copyright = "2022, Abdellah Tounsi, Amina Sadik, Mohamed Messaoud Louamri, Nacer eddine Belaloui, Wafa Makhlouf"
+author = "Abdellah Tounsi, Amina Sadik, Mohamed Messaoud Louamri, Nacer eddine Belaloui, Wafa Makhlouf"
 
 # The short X.Y version
 version = ""
 # The full version, including alpha/beta/rc tags
-release = "0.0.1"
+release = "0.0.2"
 
 
 # -- General configuration ---------------------------------------------------
@@ -137,7 +137,7 @@ latex_documents = [
         master_doc,
         "CQTRNG.tex",
         "CQTRNG Documentation",
-        "Abdellah Tounsi, Amina Sadik, Mohamed Messaoud Louamri, Nacer eddine Belaloui, Wafa Makhlouf, Zakaria Benhaddouche",
+        "Abdellah Tounsi, Amina Sadik, Mohamed Messaoud Louamri, Nacer eddine Belaloui, Wafa Makhlouf",
         "manual",
     ),
 ]
@@ -162,7 +162,7 @@ texinfo_documents = [
         "CQTRNG Documentation",
         author,
         "CQTRNG",
-        "One line description of project.",
+        "A small package to generate random numbers using quantum entropy sources.",
         "Miscellaneous",
     ),
 ]

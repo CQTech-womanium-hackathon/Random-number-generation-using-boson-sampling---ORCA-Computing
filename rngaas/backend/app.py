@@ -1,4 +1,4 @@
-from flask import Flask, request, after_this_request, send_file
+from flask import Flask, request, after_this_request, send_file, jsonify
 from flask_cors import CORS
 from cqt_rng import RNG
 from cqt_rng.entropy_sources import BosonSampler
@@ -7,6 +7,7 @@ from time import gmtime, strftime
 import os
 import numpy as np
 from uuid import uuid4
+
 
 app = Flask(__name__)
 CORS(app)
@@ -33,7 +34,7 @@ def generate():
             )
             f.write(message)
 
-            return {"filename": filename}
+            return jsonify({"filename": filename})
 
     except Exception as e:
         with open(".log", "a") as f:
@@ -100,3 +101,7 @@ def download():
             )
             f.write(message)
         return "bad request!", 400
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=3001, debug=True, threaded=True)

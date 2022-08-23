@@ -4,4 +4,4 @@ strawberryfields
 numpy
 scipy
 matplotlib
-
+tqdm

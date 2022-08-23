@@ -1,4 +1,4 @@
-cqt_rng
+cqt_rng==0.0.2
 flask
 flask-cors
 gunicorn
