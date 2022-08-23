@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 
-const serverUrl = "http://105.107.130.207:5000/";
+const serverUrl = "http://https://cqtrng-prod-rngaas-dmm6ps.mo2.mogenius.io/";
 const Home: NextPage = () => {
   const [filename, setFilename] = useState("");
   const [length, setLength] = useState(1024);
@@ -183,21 +183,21 @@ const Home: NextPage = () => {
             <div className="m-5">
               <img
                 src="https://i.ibb.co/NCsWw9C/629a217b4ae75-image-removebg-preview.png"
-                alt="Womanium's program logo"
+                alt="Womanium s program logo"
                 style={{ maxHeight: "100px", width: "auto" }}
               />
             </div>
             <div className="m-5">
               <img
                 src="https://i.ibb.co/ChLyFKb/ORCA-Computing-Logo.png"
-                alt="ORCA's logo"
+                alt="ORCA s logo"
                 style={{ maxHeight: "100px", width: "auto" }}
               />
             </div>
             <div className="m-5">
               <img
                 src="https://i.ibb.co/gm6bs9j/Round-CQT.png"
-                alt="CQT's logo"
+                alt="CQT s logo"
                 style={{ maxHeight: "100px", width: "auto" }}
               />
             </div>
@@ -372,7 +372,7 @@ const Home: NextPage = () => {
               Pricing Options
             </h2>
             <p className="box-border mt-4 text-2xl leading-normal text-gray-900 border-solid">
-              We have adequate plan for your company's needs
+              We have adequate plan for your company&apos;s needs
             </p>
           </div>
           <div className="grid max-w-md mx-auto mt-6 overflow-hidden leading-7 text-gray-900 border border-b-4 border-gray-300 border-blue-600 rounded-xl md:max-w-lg lg:max-w-none sm:mt-10 lg:grid-cols-3">
