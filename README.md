@@ -60,7 +60,7 @@ rng.generate(length = 1024)
 
 You can also use your custom entropy sources by implementing them as subclasses of the abstract class `EntropySource`, and also implement your own postprocessors as subclasses of the abstract class `PostProcessor`.
 
-_For more example, please refer to the [documentation]()._
+_For more example, please refer to the [documentation](https://cqtrng.readthedocs.io/en/latest/)._
 
 ### More on RNG
 
