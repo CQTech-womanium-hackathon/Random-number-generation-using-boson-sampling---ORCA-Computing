@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 
-const serverUrl = "http://https://cqtrng-prod-rngaas-dmm6ps.mo2.mogenius.io/";
+const serverUrl = "https://cqtrng-prod-rngaas-dmm6ps.mo2.mogenius.io/";
 const Home: NextPage = () => {
   const [filename, setFilename] = useState("");
   const [length, setLength] = useState(1024);
